@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char S1[50] = "Flowers";
+    char S2[50] = "are beautiful";
+    char result[100];
+    char *substr;
+    
+    // I. Length of S1
+    printf("Length of S1: %lu\n", strlen(S1));
+
+    // II. Concatenate S1 and S2
+    strcpy(result, S1);
+    strcat(result, " ");
+    strcat(result, S2);
+    printf("Concatenated string: %s\n", result);
+
+    // III. Extract substring "low" from S1
+    substr = strstr(S1, "low");
+    if (substr != NULL) {
+        printf("Substring 'low' found: %.*s\n", 3, substr);
+    } else {
+        printf("Substring 'low' not found in S1.\n");
+    }
+
+    // IV. Replace "are" in S2 with "is"
+    char modifiedS2[50];
+    char *pos = strstr(S2, "are");
+    if (pos != NULL) {
+        int index = pos - S2;
+        strncpy(modifiedS2, S2, index);
+        modifiedS2[index] = '\0';
+        strcat(modifiedS2, "is");
+        strcat(modifiedS2, pos + 3);
+        printf("Modified S2 after replacing 'are' with 'is': %s\n", modifiedS2);
+    } else {
+        printf("'are' not found in S2.\n");
+    }
+
+    return 0;
+}
