@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <ctype.h>
+#define MAX 100
+
+int stack[MAX];
+int top = -1;
+
+void push(int value) {
+    stack[++top] = value;
+}
+
+int pop() {
+    return stack[top--];
+}
+
+int evaluatePostfix(char* exp) {
+    int i = 0;
+    while (exp[i]) {
+        if (isdigit(exp[i])) {
+            push(exp[i] - '0');
+        } else if (exp[i] == ' ') {
+            // Skip spaces
+        } else {
+            int val2 = pop();
+            int val1 = pop();
+            switch (exp[i]) {
+                case '+': push(val1 + val2); break;
+                case '-': push(val1 - val2); break;
+                case '*': push(val1 * val2); break;
+                case '/': push(val1 / val2); break;
+            }
+        }
+        i++;
+    }
+    return pop();
+}
+
+int main() {
+    char postfix[] = "5 3 + 8 2 - *";
+    printf("Result = %d\n", evaluatePostfix(postfix));
+    return 0;
+}

@@ -1,0 +1,71 @@
+#include <stdio.h>
+
+#define SIZE 10
+
+int hashTable[SIZE];
+
+void initialize() {
+	int i;
+    for (i = 0; i < SIZE; i++)
+        hashTable[i] = -1;
+}
+
+int hash(int key) {
+    return key % SIZE;
+}
+
+void insert(int key) {
+    int index = hash(key);
+    int start = index;
+
+    while (hashTable[index] != -1) {
+        index = (index + 1) % SIZE;
+        if (index == start) {
+            printf("Hash table is full!\n");
+            return;
+        }
+    }
+    hashTable[index] = key;
+    printf("Inserted %d at index %d\n", key, index);
+}
+
+int search(int key) {
+    int index = hash(key);
+    int start = index;
+
+    while (hashTable[index] != -1) {
+        if (hashTable[index] == key)
+            return index;
+        index = (index + 1) % SIZE;
+        if (index == start)
+            break;
+    }
+    return -1;
+}
+
+void display() {
+    printf("Hash Table:\n");
+    int i;
+	for (i = 0; i < SIZE; i++)
+        printf("Index %d: %d\n", i, hashTable[i]);
+}
+
+int main() {
+    initialize();
+
+    insert(23);
+    insert(43);
+    insert(13);
+    insert(27);
+
+    display();
+
+    int key = 43;
+    int index = search(key);
+    if (index != -1)
+        printf("Element %d found at index %d\n", key, index);
+    else
+        printf("Element %d not found\n", key);
+
+    return 0;
+}
